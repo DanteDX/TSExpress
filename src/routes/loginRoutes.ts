@@ -1,4 +1,8 @@
 import { Router,Response,Request } from "express";
+interface RequestWithBody extends Request{
+  body: { [key: string]: (string | undefined) };
+}
+
 const router = Router();
 router.get("/login", (req: Request, res: Response) => {
   res.send(`
@@ -14,9 +18,17 @@ router.get("/login", (req: Request, res: Response) => {
   `)
 });
 
-router.post("/login", (req: Request, res: Response) => {
-  console.log(req.body);
-  res.send(`userName is ${req.body.userName} & userEmail is ${req.body.userEmail}`);
+router.post("/login", (req: RequestWithBody, res: Response) => {
+  const { userName, userEmail } = req.body;
+  if (userName === undefined || userEmail === undefined) {
+    if (!userName) {
+      res.send("userName must be provided");
+    } else if(!userEmail) {
+      res.send("userEmail must be provided");
+    }
+  } else {
+    res.send(`UserName is ${userName} & UserEmail is ${userEmail}`);
+  }
 })
 
 export { router };

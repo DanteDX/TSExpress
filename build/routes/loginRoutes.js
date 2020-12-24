@@ -18,6 +18,16 @@ router.get("/login", (req, res) => {
   `);
 });
 router.post("/login", (req, res) => {
-    console.log(req.body);
-    res.send(`userName is ${req.body.userName} & userEmail is ${req.body.userEmail}`);
+    const { userName, userEmail } = req.body;
+    if (userName === undefined || userEmail === undefined) {
+        if (!userName) {
+            res.send("userName must be provided");
+        }
+        else if (!userEmail) {
+            res.send("userEmail must be provided");
+        }
+    }
+    else {
+        res.send(`UserName is ${userName} & UserEmail is ${userEmail}`);
+    }
 });
