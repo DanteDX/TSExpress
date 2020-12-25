@@ -7,7 +7,7 @@ Boat.prototype.getModelName = function(){
     return this.modelName;
 }
 
-Boat.prototype.changeModelName = function(newModel):void{
+Boat.prototype.changeModelName = function(newModel){
     if(!this.modelName){
         return false;
     }
